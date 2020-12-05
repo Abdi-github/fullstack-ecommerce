@@ -3,7 +3,7 @@ import { auth } from "../../firebase";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
 
-const RegisterCompletePage = (props) => {
+const RegisterCompletePage = ({ history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -39,7 +39,7 @@ const RegisterCompletePage = (props) => {
         // redux store
         console.log("user", user, "tokenResult", tokenResult);
         // redirect
-        props.history.push("/");
+        history.push("/");
       }
     } catch (error) {
       console.log(error);

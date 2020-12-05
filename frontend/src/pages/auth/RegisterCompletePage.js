@@ -35,11 +35,11 @@ const RegisterCompletePage = (props) => {
         let user = auth.currentUser;
         // console.log(user);
         await user.updatePassword(password);
-        const idTokenResult = await user.getIdTokenResult();
+        const tokenResult = await user.getIdTokenResult();
         // redux store
-        console.log("user", user, "idTokenResult", idTokenResult);
+        console.log("user", user, "tokenResult", tokenResult);
         // redirect
-        // props.history.push("/");
+        props.history.push("/");
       }
     } catch (error) {
       console.log(error);

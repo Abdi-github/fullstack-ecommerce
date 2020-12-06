@@ -5,6 +5,9 @@ import { toast } from "react-toastify";
 import { Button } from "antd";
 import { MailOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
+import LoadingSpinner from "../../components/Loading";
+import * as ReactBootstrap from "react-bootstrap";
+import Loading from "../../components/Loading";
 
 const LoginPage = ({ history }) => {
   const [email, setEmail] = useState("enatfikkir@yahoo.com");
@@ -46,7 +49,7 @@ const LoginPage = ({ history }) => {
     <div className="container p-5">
       <div className="row">
         <div className="col-md-6 offset-md-3">
-          <h4>Login</h4>
+          {loading ? <Loading /> : <h4>Login</h4>}
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <input

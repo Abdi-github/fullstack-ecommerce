@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import { auth } from "../../firebase";
+import { auth, provider } from "../../firebase";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import { Button } from "antd";
-import { MailOutlined } from "@ant-design/icons";
+import { GoogleOutlined, MailOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
-import LoadingSpinner from "../../components/Loading";
-import * as ReactBootstrap from "react-bootstrap";
 import Loading from "../../components/Loading";
 
 const LoginPage = ({ history }) => {
@@ -43,6 +41,44 @@ const LoginPage = ({ history }) => {
       setLoading(false);
       console.log(error);
     }
+  };
+
+  const handleGoogleLogin = async () => {
+    auth
+      .signInWithPopup(provider)
+      .then(async (result) => {
+        const { user } = result;
+        const tokenResult = await user.getIdTokenResult();
+        //   createOrUpdateUser(idTokenResult.token)
+        //     .then((res) => {
+        //       dispatch({
+        //         type: "LOGGED_IN_USER",
+        //         payload: {
+        //           name: res.data.name,
+        //           email: res.data.email,
+        //           token: idTokenResult.token,
+        //           role: res.data.role,
+        //           _id: res.data._id,
+        //         },
+        //       });
+        //       roleBasedRedirect(res);
+        //     })
+        //     .catch((err) => console.log(err));
+        //   // history.push("/");
+        // })
+        dispatch({
+          type: "LOGGED_IN_USER",
+          payload: {
+            email: user.email,
+            token: tokenResult.token,
+          },
+        });
+        history.push("/");
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.message);
+      });
   };
 
   return (
@@ -84,6 +120,17 @@ const LoginPage = ({ history }) => {
               disabled={!email || password.length < 6}
             >
               Login with Email/Password
+            </Button>
+            <Button
+              onClick={handleGoogleLogin}
+              type="danger"
+              className="mb-3"
+              block
+              shape="round"
+              icon={<GoogleOutlined />}
+              size="large"
+            >
+              Login with Google
             </Button>
           </form>
         </div>

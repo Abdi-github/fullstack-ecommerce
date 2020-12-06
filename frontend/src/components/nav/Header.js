@@ -10,12 +10,17 @@ import {
 import { Link, useHistory } from "react-router-dom";
 
 import firebase from "firebase";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const { SubMenu, Item } = Menu;
 
 const Header = () => {
   const [current, setCurrent] = useState("home");
+
+  const user = useSelector((state) => state.user);
+  // console.log(user);
+
+  const { email, token } = user;
 
   const handleClick = (e) => {
     // console.log(e.key);
@@ -39,22 +44,32 @@ const Header = () => {
       <Item key="home" icon={<AppstoreOutlined />}>
         <Link to="/">Home</Link>
       </Item>
-
-      <Item key="register" icon={<UserAddOutlined />} className="float-right">
-        <Link to="/register">Register</Link>
-      </Item>
-
-      <Item key="login" icon={<UserOutlined />} className="float-right">
-        <Link to="/login">Login</Link>
-      </Item>
-
-      <SubMenu icon={<SettingOutlined />} title="Username">
-        <Item key="setting:1">Option 1</Item>
-        <Item key="setting:2">Option 2</Item>
-        <Item icon={<LogoutOutlined />} onClick={logout}>
-          Logout
-        </Item>
-      </SubMenu>
+      {!token ? (
+        <>
+          <Item
+            key="register"
+            icon={<UserAddOutlined />}
+            className="float-right"
+          >
+            <Link to="/register">Register</Link>
+          </Item>
+          <Item key="login" icon={<UserOutlined />} className="float-right">
+            <Link to="/login">Login</Link>
+          </Item>
+        </>
+      ) : (
+        <SubMenu
+          icon={<SettingOutlined />}
+          title={email.split("@")[0]}
+          className="float-right"
+        >
+          <Item key="setting:1">Option 1</Item>
+          <Item key="setting:2">Option 2</Item>
+          <Item icon={<LogoutOutlined />} onClick={logout}>
+            Logout
+          </Item>
+        </SubMenu>
+      )}
     </Menu>
   );
 };

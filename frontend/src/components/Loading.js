@@ -4,7 +4,7 @@ import { BeatLoader } from "react-spinners";
 const Loading = () => {
   return (
     <div className="d-flex justify-content-center">
-      <BeatLoader />
+      <BeatLoader size={36} color="brown" />
     </div>
   );
 };

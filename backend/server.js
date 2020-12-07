@@ -1,11 +1,22 @@
-import dotenv from "dotenv";
-import express from "express";
-import mongoose from "mongoose";
-import cors from "cors";
-import bodyParser from "body-parser";
-import morgan from "morgan";
+// import dotenv from "dotenv";
+// import express from "express";
+// import mongoose from "mongoose";
+// import cors from "cors";
+// import bodyParser from "body-parser";
+// import morgan from "morgan";
 
-dotenv.config();
+const express = require("express");
+const mongoose = require("mongoose");
+const morgan = require("morgan");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const { readdirSync } = require("fs");
+require("dotenv").config();
+
+// import authRouter from "./routes/auth.js";
+const authRouter = require("./routes/auth");
+
+// import readdirSync from "fs";
 
 const app = express();
 
@@ -28,12 +39,17 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(morgan("dev"));
 
-//Routes
+//Routes to check
 app.get("/", (req, res) => {
-  res.status(200).json({
+  res.json({
     message: "Server is running",
   });
 });
+
+// routes middleware
+// app.use("/api", authRouter);
+// ----------- ROUTES AUTOLOADING -------------------
+readdirSync("./routes").map((r) => app.use("/api", require("./routes/" + r)));
 
 // port
 

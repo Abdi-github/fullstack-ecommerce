@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { auth, provider } from "../../firebase";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
@@ -65,6 +65,12 @@ const LoginPage = ({ history }) => {
         toast.error(error.message);
       });
   };
+
+  const user = useSelector((state) => state.user);
+  const { token } = user;
+  useEffect(() => {
+    if (token) history.push("/");
+  }, [token]);
 
   return (
     <div className="container p-5">

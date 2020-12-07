@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
 import Loading from "../../components/Loading";
 import { auth } from "../../firebase";
@@ -29,6 +30,12 @@ const ForgotPasswordPage = ({ history }) => {
         console.log("ERROR MSG IN FORGOT PASSWORD", error);
       });
   };
+
+  const user = useSelector((state) => state.user);
+  const { token } = user;
+  useEffect(() => {
+    if (token) history.push("/");
+  }, [token]);
 
   return (
     <div className="container col-md-6 offset-md-3 p-5">

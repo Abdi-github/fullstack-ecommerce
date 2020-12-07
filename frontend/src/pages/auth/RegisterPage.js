@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { auth } from "../../firebase";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
+import { useSelector } from "react-redux";
 
-const RegisterPage = () => {
+const RegisterPage = ({ history }) => {
   const [email, setEmail] = useState("");
 
   const handleSubmit = async (e) => {
@@ -22,6 +23,12 @@ const RegisterPage = () => {
     // clear state
     setEmail("");
   };
+
+  const user = useSelector((state) => state.user);
+  const { token } = user;
+  useEffect(() => {
+    if (token) history.push("/");
+  }, [token]);
 
   return (
     <div className="container p-5">

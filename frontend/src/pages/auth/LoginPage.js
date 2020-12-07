@@ -6,6 +6,7 @@ import { Button } from "antd";
 import { GoogleOutlined, MailOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../components/Loading";
+import { Link } from "react-router-dom";
 
 const LoginPage = ({ history }) => {
   const [email, setEmail] = useState("enatfikkir@yahoo.com");
@@ -49,23 +50,7 @@ const LoginPage = ({ history }) => {
       .then(async (result) => {
         const { user } = result;
         const tokenResult = await user.getIdTokenResult();
-        //   createOrUpdateUser(idTokenResult.token)
-        //     .then((res) => {
-        //       dispatch({
-        //         type: "LOGGED_IN_USER",
-        //         payload: {
-        //           name: res.data.name,
-        //           email: res.data.email,
-        //           token: idTokenResult.token,
-        //           role: res.data.role,
-        //           _id: res.data._id,
-        //         },
-        //       });
-        //       roleBasedRedirect(res);
-        //     })
-        //     .catch((err) => console.log(err));
-        //   // history.push("/");
-        // })
+
         dispatch({
           type: "LOGGED_IN_USER",
           payload: {
@@ -132,6 +117,10 @@ const LoginPage = ({ history }) => {
             >
               Login with Google
             </Button>
+
+            <Link to="/forgot/password" className="float-right text-danger">
+              Forgot Password
+            </Link>
           </form>
         </div>
       </div>

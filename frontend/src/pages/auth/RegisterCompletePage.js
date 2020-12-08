@@ -2,10 +2,15 @@ import React, { useEffect, useState } from "react";
 import { auth } from "../../firebase";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+
+import { addUpdateUser } from "../../functions/auth";
 
 const RegisterCompletePage = ({ history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // console.log(window.localStorage.getItem("emailForRegistration"));
@@ -38,6 +43,24 @@ const RegisterCompletePage = ({ history }) => {
         const tokenResult = await user.getIdTokenResult();
         // redux store
         console.log("user", user, "tokenResult", tokenResult);
+
+        addUpdateUser(tokenResult.token)
+          .then((res) => {
+            console.log("ADD-UPDATE RESPONSE", res);
+
+            dispatch({
+              type: "LOGGED_IN_USER",
+              payload: {
+                name: res.data.name,
+                email: res.data.email,
+                token: tokenResult.token,
+                role: res.data.role,
+                _id: res.data._id,
+              },
+            });
+          })
+          .catch();
+
         // redirect
         history.push("/");
       }

@@ -7,19 +7,8 @@ import { GoogleOutlined, MailOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../components/Loading";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
-const addUpdateUser = async (userToken) => {
-  return await axios.post(
-    `${process.env.REACT_APP_API}/add-update-user`,
-    {},
-    {
-      headers: {
-        userToken,
-      },
-    }
-  );
-};
+import { addUpdateUser } from "../../functions/auth";
 
 const LoginPage = ({ history }) => {
   const [email, setEmail] = useState("enatfikkir@yahoo.com");
@@ -43,21 +32,27 @@ const LoginPage = ({ history }) => {
       // console.log(tokenResult.token);
 
       addUpdateUser(tokenResult.token)
-        .then((res) => console.log("ADD-UPDATE RESPONSE", res))
+        .then((res) => {
+          console.log("ADD-UPDATE RESPONSE", res);
+
+          dispatch({
+            type: "LOGGED_IN_USER",
+            payload: {
+              name: res.data.name,
+              email: res.data.email,
+              token: tokenResult.token,
+              role: res.data.role,
+              _id: res.data._id,
+            },
+          });
+        })
         .catch();
 
-      // dispatch({
-      //   type: "LOGGED_IN_USER",
-      //   payload: {
-      //     email: user.email,
-      //     token: tokenResult.token,
-      //   },
-      // });
-      // history.push("/");
+      history.push("/");
     } catch (error) {
+      console.log(error);
       toast.error(error.message);
       setLoading(false);
-      console.log(error);
     }
   };
 
@@ -68,13 +63,22 @@ const LoginPage = ({ history }) => {
         const { user } = result;
         const tokenResult = await user.getIdTokenResult();
 
-        dispatch({
-          type: "LOGGED_IN_USER",
-          payload: {
-            email: user.email,
-            token: tokenResult.token,
-          },
-        });
+        addUpdateUser(tokenResult.token)
+          .then((res) => {
+            console.log("ADD-UPDATE RESPONSE", res);
+
+            dispatch({
+              type: "LOGGED_IN_USER",
+              payload: {
+                name: res.data.name,
+                email: res.data.email,
+                token: tokenResult.token,
+                role: res.data.role,
+                _id: res.data._id,
+              },
+            });
+          })
+          .catch();
         history.push("/");
       })
       .catch((error) => {

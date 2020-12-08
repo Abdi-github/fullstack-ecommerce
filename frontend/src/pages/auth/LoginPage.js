@@ -7,6 +7,19 @@ import { GoogleOutlined, MailOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../components/Loading";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
+const addUpdateUser = async (userToken) => {
+  return await axios.post(
+    `${process.env.REACT_APP_API}/add-update-user`,
+    {},
+    {
+      headers: {
+        userToken,
+      },
+    }
+  );
+};
 
 const LoginPage = ({ history }) => {
   const [email, setEmail] = useState("enatfikkir@yahoo.com");
@@ -29,14 +42,18 @@ const LoginPage = ({ history }) => {
       // console.log(tokenResult);
       // console.log(tokenResult.token);
 
-      dispatch({
-        type: "LOGGED_IN_USER",
-        payload: {
-          email: user.email,
-          token: tokenResult.token,
-        },
-      });
-      history.push("/");
+      addUpdateUser(tokenResult.token)
+        .then((res) => console.log("ADD-UPDATE RESPONSE", res))
+        .catch();
+
+      // dispatch({
+      //   type: "LOGGED_IN_USER",
+      //   payload: {
+      //     email: user.email,
+      //     token: tokenResult.token,
+      //   },
+      // });
+      // history.push("/");
     } catch (error) {
       toast.error(error.message);
       setLoading(false);

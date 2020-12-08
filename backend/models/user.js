@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 const userSchema = new mongoose.Schema(
   {
     name: String,
@@ -8,7 +10,7 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      default: "subscriber",
+      default: "customer",
     },
     cart: {
       type: Array,

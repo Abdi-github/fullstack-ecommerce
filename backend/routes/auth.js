@@ -1,8 +1,9 @@
 import express from "express";
 import { addUpdateUser } from "../controllers/auth";
+import { authVerify } from "../middlewares/authMiddleware";
 
 const authRouter = express.Router();
 
-authRouter.get("/add-update-user", addUpdateUser);
+authRouter.post("/add-update-user", authVerify, addUpdateUser);
 
 module.exports = authRouter;

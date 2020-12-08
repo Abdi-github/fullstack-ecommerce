@@ -46,7 +46,7 @@ const LoginPage = ({ history }) => {
             },
           });
         })
-        .catch();
+        .catch((error) => console.log(error));
 
       history.push("/");
     } catch (error) {

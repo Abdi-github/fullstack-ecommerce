@@ -8,6 +8,7 @@ import RegisterCompletePage from "./pages/auth/RegisterCompletePage";
 import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
 import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
+import { currentUser } from "./functions/auth";
 
 function App() {
   const dispatch = useDispatch();
@@ -18,13 +19,22 @@ function App() {
       if (user) {
         const tokenResult = await user.getIdTokenResult();
         console.log("user", user);
-        dispatch({
-          type: "LOGGED_IN_USER",
-          payload: {
-            email: user.email,
-            token: tokenResult.token,
-          },
-        });
+        currentUser(tokenResult.token)
+          .then((res) => {
+            console.log("ADD-UPDATE RESPONSE", res);
+
+            dispatch({
+              type: "LOGGED_IN_USER",
+              payload: {
+                name: res.data.name,
+                email: res.data.email,
+                token: tokenResult.token,
+                role: res.data.role,
+                _id: res.data._id,
+              },
+            });
+          })
+          .catch((error) => console.log(error));
       }
     });
     // cleanup

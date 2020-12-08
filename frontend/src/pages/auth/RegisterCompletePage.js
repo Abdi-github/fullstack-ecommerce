@@ -59,7 +59,7 @@ const RegisterCompletePage = ({ history }) => {
               },
             });
           })
-          .catch();
+          .catch((error) => console.log(error));
 
         // redirect
         history.push("/");

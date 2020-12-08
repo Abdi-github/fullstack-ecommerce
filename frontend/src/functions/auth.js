@@ -11,3 +11,15 @@ export const addUpdateUser = async (userToken) => {
     }
   );
 };
+
+export const currentUser = async (userToken) => {
+  return await axios.post(
+    `${process.env.REACT_APP_API}/current-user`,
+    {},
+    {
+      headers: {
+        userToken,
+      },
+    }
+  );
+};

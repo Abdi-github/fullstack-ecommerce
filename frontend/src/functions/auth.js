@@ -23,3 +23,15 @@ export const currentUser = async (userToken) => {
     }
   );
 };
+
+export const currentAdmin = async (userToken) => {
+  return await axios.post(
+    `${process.env.REACT_APP_API}/current-admin`,
+    {},
+    {
+      headers: {
+        userToken,
+      },
+    }
+  );
+};

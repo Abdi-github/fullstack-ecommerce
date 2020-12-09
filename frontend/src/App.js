@@ -13,6 +13,8 @@ import UserPrivateRoute from "./components/routes/UserPrivateRoute";
 import UserDashboardPage from "./pages/user/UserDashboardPage";
 import PasswordUpdatePage from "./pages/user/PasswordUpdatePage";
 import WishListPage from "./pages/user/WishListPage";
+import AdminRoute from "./components/routes/AdminRoute";
+import AdminDashboardPage from "./pages/admin/AdminDashboardPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -43,7 +45,7 @@ function App() {
     });
     // cleanup
     return () => unsubscribe();
-  }, []);
+  }, [dispatch]);
   return (
     <>
       <Header />
@@ -62,6 +64,7 @@ function App() {
           component={PasswordUpdatePage}
         />
         <UserPrivateRoute path="/user/wishlist" component={WishListPage} />
+        <AdminRoute path="/admin/dashboard" component={AdminDashboardPage} />
       </Switch>
     </>
   );

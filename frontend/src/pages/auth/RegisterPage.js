@@ -28,7 +28,7 @@ const RegisterPage = ({ history }) => {
   const { token } = user;
   useEffect(() => {
     if (token) history.push("/");
-  }, [token]);
+  }, [token, history]);
 
   return (
     <div className="container p-5">

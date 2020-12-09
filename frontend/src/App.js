@@ -64,7 +64,11 @@ function App() {
           component={PasswordUpdatePage}
         />
         <UserPrivateRoute path="/user/wishlist" component={WishListPage} />
-        <AdminRoute path="/admin/dashboard" component={AdminDashboardPage} />
+        <AdminRoute
+          exact
+          path="/admin/dashboard"
+          component={AdminDashboardPage}
+        />
       </Switch>
     </>
   );

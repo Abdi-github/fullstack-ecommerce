@@ -8,7 +8,7 @@ const UserDashboardPage = () => {
         <div className="col-md-2">
           <UserDashboard />
         </div>
-        <div className="col">user history page</div>
+        <div className="col">user dashboard page</div>
       </div>
     </div>
   );

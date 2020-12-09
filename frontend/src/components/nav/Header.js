@@ -20,7 +20,7 @@ const Header = () => {
   const user = useSelector((state) => state.user);
   // console.log(user);
 
-  const { email, token } = user;
+  const { email, token, role } = user;
 
   const handleClick = (e) => {
     // console.log(e.key);
@@ -63,8 +63,17 @@ const Header = () => {
           title={email.split("@")[0]}
           className="float-right"
         >
-          <Item key="setting:1">Option 1</Item>
-          <Item key="setting:2">Option 2</Item>
+          {token && role === "customer" && (
+            <Item>
+              <Link to="/user/dashboard">Dashboard</Link>
+            </Item>
+          )}
+
+          {token && role === "admin" && (
+            <Item>
+              <Link to="/admin/dashboard">Dashboard</Link>
+            </Item>
+          )}
           <Item icon={<LogoutOutlined />} onClick={logout}>
             Logout
           </Item>

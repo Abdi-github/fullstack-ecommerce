@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { auth, provider } from "../../firebase";
 import "react-toastify/dist/ReactToastify.css";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { Button } from "antd";
 import { GoogleOutlined, MailOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,7 +20,7 @@ const LoginPage = ({ history }) => {
     if (res.data.role === "admin") {
       history.push("/admin/dashboard");
     } else {
-      history.push("/user/history");
+      history.push("/user/dashboard");
     }
   };
 
@@ -107,6 +107,7 @@ const LoginPage = ({ history }) => {
     <div className="container p-5">
       <div className="row">
         <div className="col-md-6 offset-md-3">
+          <ToastContainer />
           {loading ? <Loading /> : <h4>Login</h4>}
           <form onSubmit={handleSubmit}>
             <div className="form-group">

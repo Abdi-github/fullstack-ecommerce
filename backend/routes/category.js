@@ -11,9 +11,9 @@ const { authVerify, adminVerify } = require("../middlewares/authMiddleware");
 const router = express.Router();
 
 router.post("/category", authVerify, adminVerify, create);
-router.get("/category", getAll);
-router.get("/category/:slug", authVerify, adminVerify, getSingle);
-router.put("/category", authVerify, adminVerify, update);
-router.delete("/category", authVerify, adminVerify, remove);
+router.get("/categories", getAll);
+router.get("/category/:slug", getSingle);
+router.put("/category/:slug", authVerify, adminVerify, update);
+router.delete("/category/:slug", authVerify, adminVerify, remove);
 
 module.exports = router;

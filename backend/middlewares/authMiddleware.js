@@ -1,4 +1,5 @@
 import admin from "../firebase";
+import User from "../models/user";
 
 // VERIFY USER BASED ON TOKEN
 

@@ -10,6 +10,7 @@ import {
   getAllCategories,
 } from "../../../functions/category";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import CategoryInputForm from "../../../components/Input-forms/CategoryInputForm";
 
 const CategoryCreate = () => {
   const user = useSelector((state) => state.user);
@@ -74,21 +75,13 @@ const CategoryCreate = () => {
         <div className="col">
           <ToastContainer />
           {loading ? <Loading /> : <h4>Create category</h4>}
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label>Name</label>
-              <input
-                type="text"
-                className="form-control"
-                onChange={(e) => setName(e.target.value)}
-                value={name}
-                autoFocus
-                required
-              />
-              <br />
-              <button className="btn btn-outline-primary">Save</button>
-            </div>
-          </form>
+
+          <CategoryInputForm
+            name={name}
+            setName={setName}
+            handleSubmit={handleSubmit}
+          />
+
           <hr />
           {/* {JSON.stringify(categories)} */}
 

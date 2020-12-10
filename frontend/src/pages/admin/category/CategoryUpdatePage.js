@@ -4,6 +4,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { useSelector } from "react-redux";
 import { getAllCategories, updateCategory } from "../../../functions/category";
 import Loading from "../../../components/Loading";
+import CategoryInputForm from "../../../components/Input-forms/CategoryInputForm";
 
 const CategoryUpdatePage = ({ history, match }) => {
   const { user } = useSelector((state) => ({ ...state }));
@@ -37,24 +38,6 @@ const CategoryUpdatePage = ({ history, match }) => {
       });
   };
 
-  const categoryForm = () => (
-    <form onSubmit={handleSubmit}>
-      <div className="form-group">
-        <label>Name</label>
-        <input
-          type="text"
-          className="form-control"
-          onChange={(e) => setName(e.target.value)}
-          value={name}
-          autoFocus
-          required
-        />
-        <br />
-        <button className="btn btn-outline-primary">Save</button>
-      </div>
-    </form>
-  );
-
   return (
     <div className="container-fluid">
       <div className="row">
@@ -64,7 +47,11 @@ const CategoryUpdatePage = ({ history, match }) => {
         <div className="col">
           {loading ? <Loading /> : <h4>Update category</h4>}
           <ToastContainer />
-          {categoryForm()}
+          <CategoryInputForm
+            name={name}
+            setName={setName}
+            handleSubmit={handleSubmit}
+          />
           <hr />
         </div>
       </div>

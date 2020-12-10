@@ -11,6 +11,7 @@ import {
 } from "../../../functions/category";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import CategoryInputForm from "../../../components/Input-forms/CategoryInputForm";
+import SearchInput from "../../../components/Input-forms/SearchInput";
 
 const CategoryCreate = () => {
   const user = useSelector((state) => state.user);
@@ -18,6 +19,9 @@ const CategoryCreate = () => {
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
+
+  // Search
+  const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
     loadCategories();
@@ -66,6 +70,8 @@ const CategoryCreate = () => {
     }
   };
 
+  const searched = (keyword) => (c) => c.name.toLowerCase().includes(keyword);
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -82,10 +88,12 @@ const CategoryCreate = () => {
             handleSubmit={handleSubmit}
           />
 
+          <SearchInput keyword={keyword} setKeyword={setKeyword} />
+
           <hr />
           {/* {JSON.stringify(categories)} */}
 
-          {categories.map((c) => (
+          {categories.filter(searched(keyword)).map((c) => (
             <div className="alert alert-secondary" key={c._id}>
               {c.name}
               <span
@@ -95,7 +103,7 @@ const CategoryCreate = () => {
                 <DeleteOutlined className="text-danger" />
               </span>
               <Link to={`/admin/category/${c.slug}`}>
-                <span className="btn btn-sm float-right">
+                <span className="btn btn-md float-right">
                   <EditOutlined className="text-warning" />
                 </span>
               </Link>

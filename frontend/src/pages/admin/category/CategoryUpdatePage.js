@@ -45,8 +45,9 @@ const CategoryUpdatePage = ({ history, match }) => {
           <AdminNav />
         </div>
         <div className="col">
-          {loading ? <Loading /> : <h4>Update category</h4>}
           <ToastContainer />
+          {loading ? <Loading /> : <h4>Update category</h4>}
+
           <CategoryInputForm
             name={name}
             setName={setName}

@@ -8,7 +8,7 @@ export const getSingleCategory = async (slug) => {
 };
 
 export const createCategory = async (category, usertoken) => {
-  return await axios.delete(`${process.env.REACT_APP_API}/category`, category, {
+  return await axios.post(`${process.env.REACT_APP_API}/category`, category, {
     headers: {
       usertoken,
     },
@@ -23,9 +23,13 @@ export const deleteCategory = async (slug, usertoken) => {
   });
 };
 export const updateCategory = async (slug, category, usertoken) => {
-  return await axios.put(`${process.env.REACT_APP_API}/category/${slug}`, {
-    headers: {
-      usertoken,
-    },
-  });
+  return await axios.put(
+    `${process.env.REACT_APP_API}/category/${slug}`,
+    category,
+    {
+      headers: {
+        usertoken,
+      },
+    }
+  );
 };

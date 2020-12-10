@@ -9,12 +9,14 @@ import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
 import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
 import { currentUser } from "./functions/auth";
-import UserPrivateRoute from "./components/routes/UserPrivateRoute";
 import UserDashboardPage from "./pages/user/UserDashboardPage";
 import PasswordUpdatePage from "./pages/user/PasswordUpdatePage";
 import WishListPage from "./pages/user/WishListPage";
-import AdminRoute from "./components/routes/AdminRoute";
 import AdminDashboardPage from "./pages/admin/AdminDashboardPage";
+import CategoryCreate from "./pages/admin/category/CategoryCreate";
+import CategoryUpdatePage from "./pages/admin/category/CategoryUpdatePage";
+import AdminRoute from "./components/routes/AdminRoute";
+import UserPrivateRoute from "./components/routes/UserPrivateRoute";
 
 function App() {
   const dispatch = useDispatch();
@@ -64,10 +66,12 @@ function App() {
           component={PasswordUpdatePage}
         />
         <UserPrivateRoute path="/user/wishlist" component={WishListPage} />
+        <AdminRoute path="/admin/dashboard" component={AdminDashboardPage} />
+        <AdminRoute exact path="/admin/category" component={CategoryCreate} />
         <AdminRoute
           exact
-          path="/admin/dashboard"
-          component={AdminDashboardPage}
+          path="/admin/category/:slug"
+          component={CategoryUpdatePage}
         />
       </Switch>
     </>

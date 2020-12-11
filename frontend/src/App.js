@@ -17,6 +17,8 @@ import CategoryCreate from "./pages/admin/category/CategoryCreate";
 import CategoryUpdatePage from "./pages/admin/category/CategoryUpdatePage";
 import AdminRoute from "./components/routes/AdminRoute";
 import UserPrivateRoute from "./components/routes/UserPrivateRoute";
+import SubCategoryCreatePage from "./pages/admin/subCategory/SubCategoryCreatePage";
+import SubCategoryUpdatePage from "./pages/admin/subCategory/SubCategoryUpdatePage";
 
 function App() {
   const dispatch = useDispatch();
@@ -72,6 +74,16 @@ function App() {
           exact
           path="/admin/category/:slug"
           component={CategoryUpdatePage}
+        />
+        <AdminRoute
+          exact
+          path="/admin/subCategory"
+          component={SubCategoryCreatePage}
+        />
+        <AdminRoute
+          exact
+          path="/admin/subCategory/:slug"
+          component={SubCategoryUpdatePage}
         />
       </Switch>
     </>

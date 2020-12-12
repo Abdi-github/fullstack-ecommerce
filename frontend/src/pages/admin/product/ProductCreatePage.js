@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
 import AdminNav from "../../../components/nav/AdminNav";
 import { createProduct } from "../../../functions/product";
+
+import { getAllCategories } from "../../../functions/category";
 
 const initialState = {
   title: "",
@@ -41,6 +43,16 @@ const ProductCreatePage = () => {
     brand,
   } = values;
 
+  useEffect(() => {
+    loadCategories();
+  }, []);
+
+  const loadCategories = () => {
+    return getAllCategories().then((c) =>
+      setValues({ ...values, categories: c.data })
+    );
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     createProduct(values, token)
@@ -74,6 +86,7 @@ const ProductCreatePage = () => {
           <hr />
 
           {/* {JSON.stringify(values)} */}
+          {JSON.stringify(values.categories)}
 
           <form onSubmit={handleSubmit}>
             <div className="form-group">
@@ -162,6 +175,23 @@ const ProductCreatePage = () => {
                     {b}
                   </option>
                 ))}
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label>Category</label>
+              <select
+                name="category"
+                className="form-control"
+                onChange={handleChange}
+              >
+                <option>Please select</option>
+                {categories.length > 0 &&
+                  categories.map((c) => (
+                    <option key={c._id} value={c._id}>
+                      {c.name}
+                    </option>
+                  ))}
               </select>
             </div>
 

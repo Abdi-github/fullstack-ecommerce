@@ -33,3 +33,11 @@ export const updateCategory = async (slug, category, usertoken) => {
     }
   );
 };
+
+// GETTING SUB CATEGORIES FOR THE GIVEN PARENT CATEGORY
+
+export const getSubCategories = async (_id) => {
+  return await axios.get(
+    `${process.env.REACT_APP_API}/category/subCategories/${_id}`
+  );
+};

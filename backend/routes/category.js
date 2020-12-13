@@ -5,6 +5,7 @@ const {
   getSingle,
   update,
   remove,
+  getSubCategories,
 } = require("../controllers/category");
 const { authVerify, adminVerify } = require("../middlewares/authMiddleware");
 
@@ -15,5 +16,9 @@ router.get("/categories", getAll);
 router.get("/category/:slug", getSingle);
 router.put("/category/:slug", authVerify, adminVerify, update);
 router.delete("/category/:slug", authVerify, adminVerify, remove);
+
+// get sub categories
+
+router.get("/category/subCategories/:_id", getSubCategories);
 
 module.exports = router;

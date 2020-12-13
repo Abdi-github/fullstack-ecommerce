@@ -4,7 +4,12 @@ import { toast, ToastContainer } from "react-toastify";
 import AdminNav from "../../../components/nav/AdminNav";
 import { createProduct } from "../../../functions/product";
 
-import { getAllCategories } from "../../../functions/category";
+import { Select } from "antd";
+
+import {
+  getAllCategories,
+  getSubCategories,
+} from "../../../functions/category";
 
 const initialState = {
   title: "",
@@ -22,18 +27,22 @@ const initialState = {
   brand: "",
 };
 
+const { Option } = Select;
+
 const ProductCreatePage = () => {
   const [values, setValues] = useState(initialState);
   const user = useSelector((state) => state.user);
   const { token } = user;
 
+  const [subCategoryOptions, setSubCategoryOptions] = useState([]);
+  const [showSubCategories, setShowSubCategories] = useState(false);
   const {
     title,
     description,
     price,
     categories,
     category,
-    subs,
+    subCategories,
     shipping,
     quantity,
     images,
@@ -73,6 +82,17 @@ const ProductCreatePage = () => {
     // console.log(e.target.name, " ----- ", e.target.value);
   };
 
+  const handleCatagoryChange = (e) => {
+    e.preventDefault();
+    console.log("CLICKED CATEGORY", e.target.value);
+    setValues({ ...values, subCategories: [], category: e.target.value });
+    getSubCategories(e.target.value).then((res) => {
+      console.log("SUBCATEGORY OPTIONS ON CATGORY CLICK", res);
+      setSubCategoryOptions(res.data);
+    });
+    setShowSubCategories(true);
+  };
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -86,7 +106,7 @@ const ProductCreatePage = () => {
           <hr />
 
           {/* {JSON.stringify(values)} */}
-          {JSON.stringify(values.categories)}
+          {/* {JSON.stringify(values.categories)} */}
 
           <form onSubmit={handleSubmit}>
             <div className="form-group">
@@ -183,7 +203,7 @@ const ProductCreatePage = () => {
               <select
                 name="category"
                 className="form-control"
-                onChange={handleChange}
+                onChange={handleCatagoryChange}
               >
                 <option>Please select</option>
                 {categories.length > 0 &&
@@ -195,6 +215,28 @@ const ProductCreatePage = () => {
               </select>
             </div>
 
+            {/* {subCategoryOptions ? subCategoryOptions.length : "no subs"} */}
+            {showSubCategories && (
+              <div>
+                <label>Sub Categories</label>
+                <Select
+                  mode="multiple"
+                  style={{ width: "100%" }}
+                  placeholder="Please select"
+                  value={subCategories}
+                  onChange={(value) =>
+                    setValues({ ...values, subCategories: value })
+                  }
+                >
+                  {subCategoryOptions.length &&
+                    subCategoryOptions.map((s) => (
+                      <Option key={s._id} value={s._id}>
+                        {s.name}
+                      </Option>
+                    ))}
+                </Select>
+              </div>
+            )}
             <button className="btn btn-outline-info btn-block">Save</button>
           </form>
         </div>

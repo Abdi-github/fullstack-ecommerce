@@ -1,5 +1,6 @@
 import Category from "../models/category";
 import slugify from "slugify";
+import SubCategory from "../models/subCategory";
 
 export const create = async (req, res) => {
   try {
@@ -46,4 +47,11 @@ export const remove = async (req, res) => {
 
     res.status(400).send("Category delete failed");
   }
+};
+
+export const getSubCategories = (req, res) => {
+  SubCategory.find({ parent: req.params._id }).exec((error, subCategories) => {
+    if (error) console.log(error);
+    res.json(subCategories);
+  });
 };

@@ -10,6 +10,8 @@ import {
   getAllCategories,
   getSubCategories,
 } from "../../../functions/category";
+import FileUpload from "../../../components/Input-forms/FileUpload";
+import Loading from "../../../components/Loading";
 
 const initialState = {
   title: "",
@@ -51,6 +53,8 @@ const ProductCreatePage = () => {
     color,
     brand,
   } = values;
+
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     loadCategories();
@@ -102,11 +106,20 @@ const ProductCreatePage = () => {
 
         <div className="col-md-10">
           <ToastContainer />
-          <h4>Create product</h4>
+          {loading ? <Loading /> : <h4>Create product</h4>}
           <hr />
 
           {/* {JSON.stringify(values)} */}
+          {JSON.stringify(values.images)}
           {/* {JSON.stringify(values.categories)} */}
+
+          <div className="p-3">
+            <FileUpload
+              values={values}
+              setValues={setValues}
+              setLoading={setLoading}
+            />
+          </div>
 
           <form onSubmit={handleSubmit}>
             <div className="form-group">

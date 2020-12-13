@@ -5,6 +5,6 @@ const { authVerify, adminVerify } = require("../middlewares/authMiddleware");
 const router = express.Router();
 
 router.post("/product", authVerify, adminVerify, create);
-router.get("/products", getAll);
+router.get("/products/:count", getAll);
 
 module.exports = router;

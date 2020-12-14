@@ -20,6 +20,7 @@ import UserPrivateRoute from "./components/routes/UserPrivateRoute";
 import SubCategoryCreatePage from "./pages/admin/subCategory/SubCategoryCreatePage";
 import SubCategoryUpdatePage from "./pages/admin/subCategory/SubCategoryUpdatePage";
 import ProductCreatePage from "./pages/admin/product/ProductCreatePage";
+import AllProductsPage from "./pages/admin/product/AllProductsPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -87,6 +88,7 @@ function App() {
           component={SubCategoryUpdatePage}
         />
         <AdminRoute exact path="/admin/product" component={ProductCreatePage} />
+        <AdminRoute exact path="/admin/products" component={AllProductsPage} />
       </Switch>
     </>
   );

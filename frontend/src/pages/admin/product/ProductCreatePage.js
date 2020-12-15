@@ -19,7 +19,7 @@ const initialState = {
   price: "",
   categories: [],
   category: "",
-  subs: [],
+  subCatagories: [],
   shipping: "",
   quantity: "",
   images: [],
@@ -107,6 +107,7 @@ const ProductCreatePage = () => {
         <div className="col-md-10">
           <ToastContainer />
           {loading ? <Loading /> : <h4>Create product</h4>}
+
           <hr />
 
           {/* {JSON.stringify(values)} */}

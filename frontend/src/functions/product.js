@@ -18,3 +18,17 @@ export const removeProduct = async (slug, usertoken) =>
       usertoken,
     },
   });
+
+export const getSingleProduct = async (slug) => {
+  return await axios.get(`${process.env.REACT_APP_API}/product/${slug}`);
+};
+
+export const getProduct = async (slug) =>
+  await axios.get(`${process.env.REACT_APP_API}/product/${slug}`);
+
+export const updateProduct = async (slug, product, usertoken) =>
+  await axios.put(`${process.env.REACT_APP_API}/product/${slug}`, product, {
+    headers: {
+      usertoken,
+    },
+  });

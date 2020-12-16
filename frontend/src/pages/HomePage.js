@@ -3,6 +3,8 @@ import ProductCard from "../components/cards/ProductCard";
 import { getProductsByCount } from "../functions/product";
 import Loading from "../components/Loading";
 import Jumbotron from "../components/Jumbotron";
+import LoadingCardSkeleton from "../components/cards/LoadingCardSkeleton";
+
 const HomePage = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -26,13 +28,17 @@ const HomePage = () => {
         <Jumbotron text={["Latest Products", "New Arrivals", "Best Sellers"]} />
       </div>
       <div className="container">
-        <div className="row">
-          {products.map((product) => (
-            <div key={product._id} className="col-md-4">
-              <ProductCard product={product} />
-            </div>
-          ))}
-        </div>
+        {loading ? (
+          <LoadingCardSkeleton count={3} />
+        ) : (
+          <div className="row">
+            {products.map((product) => (
+              <div key={product._id} className="col-md-4">
+                <ProductCard product={product} />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </>
   );

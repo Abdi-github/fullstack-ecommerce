@@ -1,0 +1,9 @@
+/* The Image container */
+.sy {
+  transition: all 1s ease-out;
+  border: solid rgb(241, 240, 240) 0.01em;
+}
+
+.sy:hover {
+  box-shadow: -5px 5px 10px rgb(57, 57, 57);
+}

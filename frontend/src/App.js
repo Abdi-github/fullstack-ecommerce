@@ -1,4 +1,5 @@
 import react, { useEffect } from "react";
+
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import HomePage from "./pages/HomePage";
@@ -53,9 +54,11 @@ function App() {
     // cleanup
     return () => unsubscribe();
   }, [dispatch]);
+
   return (
     <>
       <Header />
+
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/register" component={RegisterPage} />

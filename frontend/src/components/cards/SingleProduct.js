@@ -10,10 +10,18 @@ import defaultImage from "../../images/defaultImage.jpg";
 import ProductDetail from "./ProductDetails";
 import ProductDetails from "./ProductDetails";
 
+import StarRating from "react-star-ratings";
+import ReactStars from "react-rating-stars-component";
+import RatingModal from "../modals/RatingModal";
+
 const SingleProduct = ({ product }) => {
-  const { title, description, images, slug } = product;
+  const { title, description, images, _id } = product;
 
   const { TabPane } = Tabs;
+
+  const ratingChanged = (newRating, name) => {
+    // console.log(newRating, name);
+  };
 
   return (
     <>
@@ -49,6 +57,7 @@ const SingleProduct = ({ product }) => {
 
       <div className="col-md-5">
         <h5 className="bg-info p-3">{title}</h5>
+
         <Card
           actions={[
             <>
@@ -58,6 +67,16 @@ const SingleProduct = ({ product }) => {
             <Link to="/">
               <HeartOutlined className="text-info" /> <br /> Add to Wishlist
             </Link>,
+            <RatingModal>
+              <StarRating
+                name={_id}
+                numberOfStars={5}
+                rating={2}
+                changeRating={ratingChanged}
+                isSelectable={true}
+                starRatedColor="red"
+              />
+            </RatingModal>,
           ]}
         >
           {/* <Meta title={title} description={description} /> */}

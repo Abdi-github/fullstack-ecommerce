@@ -16,7 +16,7 @@ const SingleProductDetail = ({ match }) => {
 
   return (
     <div className="container-fluid">
-      {JSON.stringify(product)}
+      {/* {JSON.stringify(product)} */}
       <div className="row pt-4">
         <SingleProduct product={product} />
       </div>

@@ -24,6 +24,7 @@ import ProductCreatePage from "./pages/admin/product/ProductCreatePage";
 import AllProductsPage from "./pages/admin/product/AllProductsPage";
 import ProductUpdatePage from "./pages/admin/product/ProductUpdatePage";
 import SingleProductDetail from "./pages/SingleProductDetail";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const dispatch = useDispatch();
@@ -59,6 +60,8 @@ function App() {
   return (
     <>
       <Header />
+
+      <ToastContainer />
 
       <Switch>
         <Route exact path="/" component={HomePage} />

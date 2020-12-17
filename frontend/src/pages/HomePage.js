@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ProductCard from "../components/cards/ProductCard";
-import { getProducts } from "../functions/product";
+import { getProducts, getProductsCount } from "../functions/product";
 import Loading from "../components/Loading";
 import Jumbotron from "../components/Jumbotron";
 import LoadingCardSkeleton from "../components/cards/LoadingCardSkeleton";
@@ -8,21 +8,6 @@ import NewArrivals from "../components/home/NewArrivals";
 import BestSellers from "../components/home/BestSellers";
 
 const HomePage = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    loadAllProducts();
-  }, []);
-
-  const loadAllProducts = () => {
-    setLoading(true);
-    getProducts("createdAt", "desc", 3).then((res) => {
-      setProducts(res.data);
-      setLoading(false);
-    });
-  };
-
   return (
     <>
       {/* {JSON.stringify(products)} */}

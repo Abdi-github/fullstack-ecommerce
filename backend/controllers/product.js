@@ -67,6 +67,7 @@ export const update = async (req, res) => {
 };
 
 // ------------- WITHOUT PAGINATION ------------ //
+
 /*
 export const list = async (req, res) => {
   try {
@@ -99,7 +100,7 @@ export const list = async (req, res) => {
       .populate("category")
       .populate("subs")
       .sort([[sort, order]])
-      .limit(limit)
+      .limit(perPage)
       .exec();
 
     res.json(products);
@@ -108,7 +109,7 @@ export const list = async (req, res) => {
   }
 };
 
-export const TotalProductsCount = async (req, res) => {
+export const totalProductsCount = async (req, res) => {
   let total = await Product.find({}).estimatedDocumentCount().exec();
   res.json(total);
 };

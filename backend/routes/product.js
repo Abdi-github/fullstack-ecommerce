@@ -7,6 +7,7 @@ const {
   update,
   list,
   totalProductsCount,
+  productRating,
 } = require("../controllers/product");
 const { authVerify, adminVerify } = require("../middlewares/authMiddleware");
 
@@ -20,5 +21,8 @@ router.get("/product/:slug", getSingleProduct);
 router.put("/product/:slug", authVerify, adminVerify, update);
 
 router.post("/products", list);
+
+// rating
+router.put("/product/star/:productId", authVerify, productRating);
 
 module.exports = router;

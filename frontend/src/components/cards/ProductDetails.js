@@ -18,7 +18,7 @@ const ProductDetails = ({ product }) => {
       <li className="list-group-item">
         Price{" "}
         <span className="label label-default label-pill pull-xs-right">
-          $ {price}
+          {price} CHF
         </span>
       </li>
 

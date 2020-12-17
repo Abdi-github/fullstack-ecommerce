@@ -23,6 +23,7 @@ import SubCategoryUpdatePage from "./pages/admin/subCategory/SubCategoryUpdatePa
 import ProductCreatePage from "./pages/admin/product/ProductCreatePage";
 import AllProductsPage from "./pages/admin/product/AllProductsPage";
 import ProductUpdatePage from "./pages/admin/product/ProductUpdatePage";
+import SingleProductDetail from "./pages/SingleProductDetail";
 
 function App() {
   const dispatch = useDispatch();
@@ -98,6 +99,8 @@ function App() {
           path="/admin/product/:slug"
           component={ProductUpdatePage}
         />
+
+        <Route path="/product/:slug" component={SingleProductDetail} />
       </Switch>
     </>
   );

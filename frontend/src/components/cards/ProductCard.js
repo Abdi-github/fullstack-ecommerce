@@ -3,6 +3,7 @@ import { Card } from "antd";
 import Meta from "antd/lib/card/Meta";
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
+import { averageRating } from "../../functions/rating";
 import defaultImage from "../../images/defaultImage.jpg";
 import "./productCard.css";
 
@@ -41,6 +42,11 @@ const ProductCard = ({ product }) => {
           description={`${description && description.substring(0, 40)}...`}
         />
       </Card>
+      {product && product.ratings && product.ratings.length > 0 ? (
+        averageRating(product)
+      ) : (
+        <div className="text-center pt-1 pb-3 text-muted">"No rating yet"</div>
+      )}
     </div>
   );
 };

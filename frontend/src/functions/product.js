@@ -43,3 +43,14 @@ export const getProducts = async (sort, order, page) =>
 export const getProductsCount = async () => {
   return await axios.get(`${process.env.REACT_APP_API}/products/total`);
 };
+
+export const starRating = async (productId, star, usertoken) =>
+  await axios.put(
+    `${process.env.REACT_APP_API}/product/rating/${productId}`,
+    { star },
+    {
+      headers: {
+        usertoken,
+      },
+    }
+  );

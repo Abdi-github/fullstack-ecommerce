@@ -23,6 +23,6 @@ router.put("/product/:slug", authVerify, adminVerify, update);
 router.post("/products", list);
 
 // rating
-router.put("/product/star/:productId", authVerify, productRating);
+router.put("/product/rating/:productId", authVerify, productRating);
 
 module.exports = router;

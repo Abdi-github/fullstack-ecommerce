@@ -1,5 +1,6 @@
 import slugify from "slugify";
 import Product from "../models/product";
+import User from "../models/user";
 
 export const create = async (req, res) => {
   try {

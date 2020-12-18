@@ -11,17 +11,13 @@ import ProductDetail from "./ProductDetails";
 import ProductDetails from "./ProductDetails";
 
 import StarRating from "react-star-ratings";
-import ReactStars from "react-rating-stars-component";
 import RatingModal from "../modals/RatingModal";
+import { averageRating } from "../../functions/rating";
 
-const SingleProduct = ({ product }) => {
+const SingleProduct = ({ product, onStarClick, star }) => {
   const { title, description, images, _id } = product;
 
   const { TabPane } = Tabs;
-
-  const ratingChanged = (newRating, name) => {
-    // console.log(newRating, name);
-  };
 
   return (
     <>
@@ -58,6 +54,14 @@ const SingleProduct = ({ product }) => {
       <div className="col-md-5">
         <h5 className="bg-info p-3">{title}</h5>
 
+        {product && product.ratings && product.ratings.length > 0 ? (
+          averageRating(product)
+        ) : (
+          <div className="text-center pt-1 pb-3 text-muted">
+            "No rating yet"
+          </div>
+        )}
+
         <Card
           actions={[
             <>
@@ -71,8 +75,8 @@ const SingleProduct = ({ product }) => {
               <StarRating
                 name={_id}
                 numberOfStars={5}
-                rating={2}
-                changeRating={ratingChanged}
+                rating={star}
+                changeRating={onStarClick}
                 isSelectable={true}
                 starRatedColor="red"
               />

@@ -16,11 +16,28 @@ const LoginPage = ({ history }) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const roleBasedRedirect = (res) => {
-    if (res.data.role === "admin") {
-      history.push("/admin/dashboard");
+  const user = useSelector((state) => state.user);
+  const { token } = user;
+  useEffect(() => {
+    let intended = history.location.state;
+    if (intended) {
+      return;
     } else {
-      history.push("/user/dashboard");
+      if (token) history.push("/");
+    }
+  }, [token, history]);
+
+  const roleBasedRedirect = (res) => {
+    // check if intended
+    let intended = history.location.state;
+    if (intended) {
+      history.push(intended.from);
+    } else {
+      if (res.data.role === "admin") {
+        history.push("/admin/dashboard");
+      } else {
+        history.push("/user/dashboard");
+      }
     }
   };
 
@@ -96,12 +113,6 @@ const LoginPage = ({ history }) => {
         toast.error(error.message);
       });
   };
-
-  const user = useSelector((state) => state.user);
-  const { token } = user;
-  useEffect(() => {
-    if (token) history.push("/");
-  }, [token, history]);
 
   return (
     <div className="container p-5">

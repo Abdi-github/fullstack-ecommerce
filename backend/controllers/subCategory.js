@@ -1,6 +1,7 @@
 import Category from "../models/category";
 import slugify from "slugify";
 import SubCategory from "../models/subCategory";
+import Product from "../models/product";
 
 export const create = async (req, res) => {
   try {
@@ -17,15 +18,29 @@ export const create = async (req, res) => {
   }
 };
 export const getAll = async (req, res) => {
-  const categoriesAll = await SubCategory.find({})
+  const subCategories = await SubCategory.find({})
     .sort({ createdAt: -1 })
     .exec();
-  res.json(categoriesAll);
+  res.json(subCategories);
 };
+
 export const getSingle = async (req, res) => {
-  const category = await SubCategory.findOne({ slug: req.params.slug }).exec();
-  res.json(category);
+  const subCategory = await SubCategory.findOne({
+    slug: req.params.slug,
+  }).exec();
+
+  // res.json(subCategory);
+
+  const products = await Product.find({ subCategories: subCategory._id })
+    .populate("category")
+    .exec();
+
+  res.json({
+    subCategory,
+    products,
+  });
 };
+
 export const update = async (req, res) => {
   const { name, parent } = req.body;
   try {

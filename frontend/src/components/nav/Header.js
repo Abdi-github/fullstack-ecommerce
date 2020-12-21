@@ -6,11 +6,13 @@ import {
   UserOutlined,
   UserAddOutlined,
   LogoutOutlined,
+  MailOutlined,
 } from "@ant-design/icons";
 import { Link, useHistory } from "react-router-dom";
 
 import firebase from "firebase";
 import { useDispatch, useSelector } from "react-redux";
+import CategoryList from "../category/CategoryList";
 
 const { SubMenu, Item } = Menu;
 
@@ -40,46 +42,85 @@ const Header = () => {
   };
 
   return (
-    <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
-      <Item key="home" icon={<AppstoreOutlined />}>
-        <Link to="/">Home</Link>
-      </Item>
-      {!token ? (
-        <>
-          <Item
-            key="register"
-            icon={<UserAddOutlined />}
+    <>
+      <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
+        <Item key="home" icon={<AppstoreOutlined />}>
+          <Link to="/">Home</Link>
+        </Item>
+
+        {!token ? (
+          <>
+            <Item
+              key="register"
+              icon={<UserAddOutlined />}
+              className="float-right"
+            >
+              <Link to="/register">Register</Link>
+            </Item>
+            <Item key="login" icon={<UserOutlined />} className="float-right">
+              <Link to="/login">Login</Link>
+            </Item>
+          </>
+        ) : (
+          <SubMenu
+            icon={<SettingOutlined />}
+            title={email.split("@")[0]}
             className="float-right"
           >
-            <Link to="/register">Register</Link>
-          </Item>
-          <Item key="login" icon={<UserOutlined />} className="float-right">
-            <Link to="/login">Login</Link>
-          </Item>
-        </>
-      ) : (
-        <SubMenu
-          icon={<SettingOutlined />}
-          title={email.split("@")[0]}
-          className="float-right"
-        >
-          {token && role === "customer" && (
-            <Item>
-              <Link to="/user/dashboard">Dashboard</Link>
-            </Item>
-          )}
+            {token && role === "customer" && (
+              <Item>
+                <Link to="/user/dashboard">Dashboard</Link>
+              </Item>
+            )}
 
-          {token && role === "admin" && (
-            <Item>
-              <Link to="/admin/dashboard">Dashboard</Link>
+            {token && role === "admin" && (
+              <Item>
+                <Link to="/admin/dashboard">Dashboard</Link>
+              </Item>
+            )}
+            <Item icon={<LogoutOutlined />} onClick={logout}>
+              Logout
             </Item>
-          )}
-          <Item icon={<LogoutOutlined />} onClick={logout}>
-            Logout
-          </Item>
+          </SubMenu>
+        )}
+      </Menu>
+
+      {/* <Menu mode="horizontal">
+        <SubMenu key="SubMenu" title="Laptops">
+          <Menu.Item key="setting:1">
+            <Link to="/user/dashboard">Dashboard</Link>
+          </Menu.Item>
+          <Menu.Item key="setting:2">Option 2</Menu.Item>
+          <Menu.Item key="setting:3">Option 3</Menu.Item>
+          <Menu.Item key="setting:4">Option 4</Menu.Item>
         </SubMenu>
-      )}
-    </Menu>
+        <SubMenu key="desktop" title="Desktops">
+          <Menu.Item key="setting:a">
+            <Link to="/user/dashboard">Dashboard</Link>
+          </Menu.Item>
+          <Menu.Item key="setting:b">Option 2</Menu.Item>
+          <Menu.Item key="setting:c">Option 3</Menu.Item>
+          <Menu.Item key="setting:d">Option 4</Menu.Item>
+        </SubMenu>
+        <SubMenu key="mobile" title="Mobiles">
+          <Menu.Item key="setting:a">
+            <Link to="/user/dashboard">Dashboard</Link>
+          </Menu.Item>
+          <Menu.Item key="setting:b">Option 2</Menu.Item>
+          <Menu.Item key="setting:c">Option 3</Menu.Item>
+          <Menu.Item key="setting:d">Option 4</Menu.Item>
+        </SubMenu>
+        <SubMenu key="printer" title="Printers">
+          <Menu.Item key="setting:a">
+            <Link to="/user/dashboard">Dashboard</Link>
+          </Menu.Item>
+          <Menu.Item key="setting:b">Option 2</Menu.Item>
+          <Menu.Item key="setting:c">Option 3</Menu.Item>
+          <Menu.Item key="setting:d">Option 4</Menu.Item>
+        </SubMenu>
+      </Menu> */}
+      {/* <CategoryList /> */}
+    </>
   );
 };
 

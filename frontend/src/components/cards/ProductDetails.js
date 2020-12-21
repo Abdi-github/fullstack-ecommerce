@@ -16,7 +16,7 @@ const ProductDetails = ({ product }) => {
   return (
     <ul className="list-group">
       <li className="list-group-item">
-        Price{" "}
+        Price
         <span className="label label-default label-pill pull-xs-right">
           {price} CHF
         </span>
@@ -24,7 +24,7 @@ const ProductDetails = ({ product }) => {
 
       {category && (
         <li className="list-group-item">
-          Category{" "}
+          Category
           <Link
             to={`/category/${category.slug}`}
             className="label label-default label-pill pull-xs-right"

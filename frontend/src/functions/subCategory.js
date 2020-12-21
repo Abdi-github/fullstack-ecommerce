@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const getAllSubCategories = async () => {
-  return await axios.get(`${process.env.REACT_APP_API}/subCategories`);
+  return await axios.get(`${process.env.REACT_APP_API}/subcategories`);
 };
 export const getSingleSubCategory = async (slug) => {
   return await axios.get(`${process.env.REACT_APP_API}/subCategory/${slug}`);

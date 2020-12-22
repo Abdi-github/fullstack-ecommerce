@@ -9,6 +9,7 @@ const {
   totalProductsCount,
   productRating,
   getRelated,
+  searchFilters,
 } = require("../controllers/product");
 const { authVerify, adminVerify } = require("../middlewares/authMiddleware");
 
@@ -28,5 +29,8 @@ router.put("/product/rating/:productId", authVerify, productRating);
 
 // related products
 router.get("/product/related/:productId", getRelated);
+
+// search products
+router.post("/search/filters", searchFilters);
 
 module.exports = router;

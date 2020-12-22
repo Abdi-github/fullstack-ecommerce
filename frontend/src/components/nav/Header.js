@@ -12,7 +12,7 @@ import { Link, useHistory } from "react-router-dom";
 
 import firebase from "firebase";
 import { useDispatch, useSelector } from "react-redux";
-import CategoryList from "../category/CategoryList";
+import SearchForm from "../Input-forms/SearchForm";
 
 const { SubMenu, Item } = Menu;
 
@@ -83,6 +83,9 @@ const Header = () => {
             </Item>
           </SubMenu>
         )}
+        <span className="float-right p-1">
+          <SearchForm />
+        </span>
       </Menu>
 
       {/* <Menu mode="horizontal">

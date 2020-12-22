@@ -9,7 +9,7 @@ import "./productCard.css";
 
 const ProductCard = ({ product }) => {
   // destructure
-  const { images, title, description, slug } = product;
+  const { images, title, description, price, slug } = product;
   const history = useHistory();
   const handleImageClick = (e) => {
     e.preventDefault();
@@ -41,6 +41,9 @@ const ProductCard = ({ product }) => {
           title={title}
           description={`${description && description.substring(0, 40)}...`}
         />
+        <div className="lead pt-2 text-center font-weight-bold font-italic">
+          <span>{price} CHF</span>
+        </div>
       </Card>
       {product && product.ratings && product.ratings.length > 0 ? (
         averageRating(product)

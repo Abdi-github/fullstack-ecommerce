@@ -168,7 +168,9 @@ export const getRelated = async (req, res) => {
   res.json(related);
 };
 
-// SEARCH AND FILTER
+//---------------- SEARCH AND FILTER----------------------
+
+// Filter by text
 
 const handleQuery = async (req, res, query) => {
   const products = await Product.find({ $text: { $search: query } })
@@ -180,11 +182,41 @@ const handleQuery = async (req, res, query) => {
   res.json(products);
 };
 
+// Filter by text
+
+const handlePrice = async (req, res, price) => {
+  try {
+    let products = await Product.find({
+      price: {
+        $gte: price[0],
+        $lte: price[1],
+      },
+    })
+      .populate("category", "_id name")
+      .populate("subs", "_id name")
+      .populate("postedBy", "_id name")
+      .exec();
+
+    res.json(products);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 exports.searchFilters = async (req, res) => {
-  const { query } = req.body;
+  const { query, price } = req.body;
+
+  // filter by text
 
   if (query) {
-    console.log("query", query);
+    console.log("query--->", query);
     await handleQuery(req, res, query);
+  }
+
+  // filter by price
+
+  if (price !== undefined) {
+    console.log("price ---> ", price);
+    await handlePrice(req, res, price);
   }
 };

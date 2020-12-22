@@ -62,3 +62,9 @@ export const getRelatedProduct = async (productId) => {
     `${process.env.REACT_APP_API}/product/related/${productId}`
   );
 };
+
+// Searching and Filtering
+
+export const getProductsByFilter = async (arg) => {
+  return await axios.post(`${process.env.REACT_APP_API}/search/filters`, arg);
+};

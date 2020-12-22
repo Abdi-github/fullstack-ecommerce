@@ -27,6 +27,7 @@ import SingleProductDetail from "./pages/SingleProductDetail";
 import { ToastContainer } from "react-toastify";
 import CategoryHomePage from "./pages/category/CategoryHomePage";
 import SubCategoryHomePage from "./pages/subCategory/SubCategoryHomePage";
+import ShopPage from "./pages/ShopPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -108,6 +109,7 @@ function App() {
         <Route path="/product/:slug" component={SingleProductDetail} />
         <Route path="/category/:slug" component={CategoryHomePage} />
         <Route path="/subcategory/:slug" component={SubCategoryHomePage} />
+        <Route path="/shop" component={ShopPage} />
       </Switch>
     </>
   );

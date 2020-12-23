@@ -262,8 +262,53 @@ const handleSubCategory = async (req, res, subCategory) => {
   res.json(products);
 };
 
+// Filter by brand
+
+const handleBrand = async (req, res, brand) => {
+  const products = await Product.find({ brand })
+    .populate("category", "_id name")
+    .populate("subCategories", "_id name")
+    .populate("postedBy", "_id name")
+    .exec();
+
+  res.json(products);
+};
+
+// Filter by color
+
+const handleColor = async (req, res, color) => {
+  const products = await Product.find({ color })
+    .populate("category", "_id name")
+    .populate("subCategories", "_id name")
+    .populate("postedBy", "_id name")
+    .exec();
+
+  res.json(products);
+};
+
+// Filter by shipping status
+
+const handleShipping = async (req, res, shipping) => {
+  const products = await Product.find({ shipping })
+    .populate("category", "_id name")
+    .populate("subCategories", "_id name")
+    .populate("postedBy", "_id name")
+    .exec();
+
+  res.json(products);
+};
+
 export const searchFilters = async (req, res) => {
-  const { query, price, category, stars, subCategory } = req.body;
+  const {
+    query,
+    price,
+    category,
+    stars,
+    subCategory,
+    brand,
+    color,
+    shipping,
+  } = req.body;
 
   // filter by text
 
@@ -298,5 +343,26 @@ export const searchFilters = async (req, res) => {
   if (subCategory) {
     console.log("sub-category ---> ", subCategory);
     await handleSubCategory(req, res, subCategory);
+  }
+
+  // filter by brands
+
+  if (brand) {
+    console.log("brand ---> ", brand);
+    await handleBrand(req, res, brand);
+  }
+
+  // filter by color
+
+  if (color) {
+    console.log("color ---> ", color);
+    await handleColor(req, res, color);
+  }
+
+  // filter by shipping
+
+  if (shipping) {
+    console.log("shipping ---> ", shipping);
+    await handleShipping(req, res, shipping);
   }
 };

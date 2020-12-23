@@ -1,4 +1,4 @@
-import { Menu, Slider } from "antd";
+import { Menu, Radio, Slider } from "antd";
 import Checkbox from "antd/lib/checkbox/Checkbox";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,6 +21,15 @@ const ShopPage = () => {
   const [star, setStar] = useState("");
   const [subCategories, setSubCategories] = useState([]);
   const [subCategory, setSubCategory] = useState("");
+
+  const [brands, setBrands] = useState([
+    "Apple",
+    "Samsung",
+    "Microsoft",
+    "Lenovo",
+    "ASUS",
+  ]);
+  const [brand, setBrand] = useState("");
 
   const search = useSelector((state) => state.search);
   const { text } = search;
@@ -90,6 +99,7 @@ const ShopPage = () => {
     setPrice([0, 0]);
     setStar("");
     setSubCategory("");
+    setBrand("");
 
     let inTheState = [...categoryIds];
     let justChecked = e.target.value;
@@ -115,10 +125,11 @@ const ShopPage = () => {
       type: "SEARCH_QUERY",
       payload: { text: "" },
     });
-    // Reseting
+    // Resetting
     setCategoryIds([]);
     setStar("");
     setSubCategory("");
+    setBrand("");
 
     setPrice(value);
 
@@ -144,6 +155,7 @@ const ShopPage = () => {
     setPrice([0, 0]);
     setCategoryIds([]);
     setSubCategory("");
+    setBrand("");
 
     setStar(num);
 
@@ -189,8 +201,40 @@ const ShopPage = () => {
     setPrice([0, 0]);
     setCategoryIds([]);
     setStar("");
+    setBrand("");
 
     getProducts({ subCategory: subCategory });
+  };
+
+  // show products based on brand name
+
+  const showBrands = () =>
+    brands.map((b) => (
+      <Radio
+        value={b}
+        name={b}
+        checked={b === brand}
+        onChange={handleBrand}
+        className="pb-1 pl-4 pr-4"
+      >
+        {b}
+      </Radio>
+    ));
+
+  const handleBrand = (e) => {
+    setSubCategory("");
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+    // Resetting
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar("");
+
+    setBrand(e.target.value);
+
+    getProducts({ brand: e.target.value });
   };
 
   return (
@@ -232,6 +276,12 @@ const ShopPage = () => {
               title={<span className="h6">Sub-Category</span>}
             >
               <div>{showSubCategories()}</div>
+            </Menu.SubMenu>
+            <Menu.SubMenu
+              key="brands"
+              title={<span className="h6">Brands</span>}
+            >
+              <div className="pr-5">{showBrands()}</div>
             </Menu.SubMenu>
           </Menu>
         </div>

@@ -3,6 +3,7 @@ import Checkbox from "antd/lib/checkbox/Checkbox";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "../components/cards/ProductCard";
+import Star from "../components/Input-forms/Star";
 import Loading from "../components/Loading";
 import { getAllCategories } from "../functions/category";
 import { getProductsByCount, getProductsByFilter } from "../functions/product";
@@ -15,6 +16,8 @@ const ShopPage = () => {
   const [price, setPrice] = useState([0, 0]);
 
   const [reqOk, setReqOk] = useState(false);
+
+  const [star, setStar] = useState("");
 
   const search = useSelector((state) => state.search);
   const { text } = search;
@@ -79,7 +82,9 @@ const ShopPage = () => {
       type: "SEARCH_QUERY",
       payload: { text: "" },
     });
+    // Reseting
     setPrice([0, 0]);
+    setStar("");
 
     let inTheState = [...categoryIds];
     let justChecked = e.target.value;
@@ -105,7 +110,9 @@ const ShopPage = () => {
       type: "SEARCH_QUERY",
       payload: { text: "" },
     });
+    // Reseting
     setCategoryIds([]);
+    setStar("");
 
     setPrice(value);
 
@@ -119,6 +126,31 @@ const ShopPage = () => {
     console.log("Ok to send request ");
     getProducts({ price: price });
   }, [reqOk]);
+
+  // Load products by star rating
+  const handleStarClick = (num) => {
+    // console.log(num);
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+    // Reseting
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar(num);
+
+    getProducts({ stars: num });
+  };
+
+  const showStars = () => (
+    <div className="px-2 pb-2">
+      <Star starClick={handleStarClick} numberOfStars={5} />
+      <Star starClick={handleStarClick} numberOfStars={4} />
+      <Star starClick={handleStarClick} numberOfStars={3} />
+      <Star starClick={handleStarClick} numberOfStars={2} />
+      <Star starClick={handleStarClick} numberOfStars={1} />
+    </div>
+  );
 
   return (
     <div className="container-fluid">
@@ -147,6 +179,12 @@ const ShopPage = () => {
                   tipFormatter={(v) => `${v} CHF`}
                 />
               </div>
+            </Menu.SubMenu>
+            <Menu.SubMenu
+              key="stars"
+              title={<span className="h6">Ratings</span>}
+            >
+              <div>{showStars()}</div>
             </Menu.SubMenu>
           </Menu>
         </div>

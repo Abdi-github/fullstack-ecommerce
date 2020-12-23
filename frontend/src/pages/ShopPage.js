@@ -31,6 +31,17 @@ const ShopPage = () => {
   ]);
   const [brand, setBrand] = useState("");
 
+  const [colors, setColors] = useState([
+    "Black",
+    "Brown",
+    "Silver",
+    "White",
+    "Blue",
+  ]);
+  const [color, setColor] = useState("");
+
+  const [shipping, setShipping] = useState("");
+
   const search = useSelector((state) => state.search);
   const { text } = search;
 
@@ -100,6 +111,8 @@ const ShopPage = () => {
     setStar("");
     setSubCategory("");
     setBrand("");
+    setColor("");
+    setShipping("");
 
     let inTheState = [...categoryIds];
     let justChecked = e.target.value;
@@ -130,6 +143,8 @@ const ShopPage = () => {
     setStar("");
     setSubCategory("");
     setBrand("");
+    setColor("");
+    setShipping("");
 
     setPrice(value);
 
@@ -156,6 +171,8 @@ const ShopPage = () => {
     setCategoryIds([]);
     setSubCategory("");
     setBrand("");
+    setColor("");
+    setShipping("");
 
     setStar(num);
 
@@ -202,6 +219,7 @@ const ShopPage = () => {
     setCategoryIds([]);
     setStar("");
     setBrand("");
+    setShipping("");
 
     getProducts({ subCategory: subCategory });
   };
@@ -231,10 +249,85 @@ const ShopPage = () => {
     setPrice([0, 0]);
     setCategoryIds([]);
     setStar("");
+    setColor("");
+    setShipping("");
 
     setBrand(e.target.value);
 
     getProducts({ brand: e.target.value });
+  };
+
+  // show products based on color
+  const showColors = () =>
+    colors.map((c) => (
+      <Radio
+        value={c}
+        name={c}
+        checked={c === color}
+        onChange={handleColor}
+        className="pb-1 pl-4 pr-4"
+      >
+        {c}
+      </Radio>
+    ));
+
+  const handleColor = (e) => {
+    setSubCategory("");
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+    // Resetting
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar("");
+    setBrand("");
+    setShipping("");
+
+    setColor(e.target.value);
+
+    getProducts({ color: e.target.value });
+  };
+
+  // show products based on shipping status yes/no
+  const showShipping = () => (
+    <>
+      <Checkbox
+        className="pb-2 pl-4 pr-4"
+        onChange={handleShippingchange}
+        value="Yes"
+        checked={shipping === "Yes"}
+      >
+        Yes
+      </Checkbox>
+
+      <Checkbox
+        className="pb-2 pl-4 pr-4"
+        onChange={handleShippingchange}
+        value="No"
+        checked={shipping === "No"}
+      >
+        No
+      </Checkbox>
+    </>
+  );
+
+  const handleShippingchange = (e) => {
+    setSubCategory("");
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+    // Resetting
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar("");
+    setBrand("");
+    setColor("");
+
+    setShipping(e.target.value);
+
+    getProducts({ shipping: e.target.value });
   };
 
   return (
@@ -282,6 +375,18 @@ const ShopPage = () => {
               title={<span className="h6">Brands</span>}
             >
               <div className="pr-5">{showBrands()}</div>
+            </Menu.SubMenu>
+            <Menu.SubMenu
+              key="colors"
+              title={<span className="h6">Colors</span>}
+            >
+              <div className="pr-5">{showColors()}</div>
+            </Menu.SubMenu>
+            <Menu.SubMenu
+              key="shipping"
+              title={<span className="h6">Shipping </span>}
+            >
+              <div className="pr-5">{showShipping()}</div>
             </Menu.SubMenu>
           </Menu>
         </div>

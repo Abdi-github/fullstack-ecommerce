@@ -7,6 +7,7 @@ import Star from "../components/Input-forms/Star";
 import Loading from "../components/Loading";
 import { getAllCategories } from "../functions/category";
 import { getProductsByCount, getProductsByFilter } from "../functions/product";
+import { getAllSubCategories } from "../functions/subCategory";
 
 const ShopPage = () => {
   const [loading, setLoading] = useState(false);
@@ -18,6 +19,8 @@ const ShopPage = () => {
   const [reqOk, setReqOk] = useState(false);
 
   const [star, setStar] = useState("");
+  const [subCategories, setSubCategories] = useState([]);
+  const [subCategory, setSubCategory] = useState("");
 
   const search = useSelector((state) => state.search);
   const { text } = search;
@@ -29,6 +32,7 @@ const ShopPage = () => {
   useEffect(() => {
     loadAllProducts();
     loadAllCategories();
+    loadAllSubCategories();
   }, []);
 
   const loadAllProducts = () => {
@@ -82,9 +86,10 @@ const ShopPage = () => {
       type: "SEARCH_QUERY",
       payload: { text: "" },
     });
-    // Reseting
+    // Resetting
     setPrice([0, 0]);
     setStar("");
+    setSubCategory("");
 
     let inTheState = [...categoryIds];
     let justChecked = e.target.value;
@@ -113,6 +118,7 @@ const ShopPage = () => {
     // Reseting
     setCategoryIds([]);
     setStar("");
+    setSubCategory("");
 
     setPrice(value);
 
@@ -137,6 +143,8 @@ const ShopPage = () => {
     // Reseting
     setPrice([0, 0]);
     setCategoryIds([]);
+    setSubCategory("");
+
     setStar(num);
 
     getProducts({ stars: num });
@@ -151,6 +159,39 @@ const ShopPage = () => {
       <Star starClick={handleStarClick} numberOfStars={1} />
     </div>
   );
+
+  //  show products by sub-category
+
+  const loadAllSubCategories = () => {
+    getAllSubCategories().then((res) => setSubCategories(res.data));
+  };
+
+  const showSubCategories = () =>
+    subCategories.map((s) => (
+      <div
+        key={s._id}
+        onClick={() => handleSubCategory(s)}
+        className="p-1 m-1 badge badge-secondary"
+        style={{ cursor: "pointer" }}
+      >
+        {s.name}
+      </div>
+    ));
+
+  const handleSubCategory = (subCategory) => {
+    // console.log("SUB-CATEGORY", subCategory);
+    setSubCategory(subCategory);
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+    // Resetting
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar("");
+
+    getProducts({ subCategory: subCategory });
+  };
 
   return (
     <div className="container-fluid">
@@ -185,6 +226,12 @@ const ShopPage = () => {
               title={<span className="h6">Ratings</span>}
             >
               <div>{showStars()}</div>
+            </Menu.SubMenu>
+            <Menu.SubMenu
+              key="stars"
+              title={<span className="h6">Sub-Category</span>}
+            >
+              <div>{showSubCategories()}</div>
             </Menu.SubMenu>
           </Menu>
         </div>

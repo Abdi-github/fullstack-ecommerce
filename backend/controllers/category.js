@@ -17,24 +17,16 @@ export const create = async (req, res) => {
   }
 };
 export const getAll = async (req, res) => {
-  const categories = await Category.find({}).sort({ createdAt: -1 }).exec();
-  res.json(categories);
-  const subCategories = await SubCategory.find({ parent: categories })
-    .populate("category")
-    .exec();
-  res.json({ categories, subCategories });
+  const category = await Category.find({}).sort({ createdAt: -1 }).exec();
+  res.json(category);
 };
 export const getSingle = async (req, res) => {
   const category = await Category.findOne({ slug: req.params.slug }).exec();
   // res.json(category);
   const products = await Product.find({ category }).populate("category").exec();
-  const subCategories = await SubCategory.find({ parent: category._id })
-    .populate("category")
-    .exec();
 
   res.json({
     category,
-    subCategories,
     products,
   });
 };

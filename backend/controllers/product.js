@@ -1,5 +1,6 @@
 import slugify from "slugify";
 import Product from "../models/product";
+import SubCategory from "../models/subCategory";
 import User from "../models/user";
 
 export const create = async (req, res) => {
@@ -182,7 +183,7 @@ const handleQuery = async (req, res, query) => {
   res.json(products);
 };
 
-// Filter by text
+// Filter by Price
 
 const handlePrice = async (req, res, price) => {
   try {
@@ -193,7 +194,7 @@ const handlePrice = async (req, res, price) => {
       },
     })
       .populate("category", "_id name")
-      .populate("subs", "_id name")
+      .populate("subCategories", "_id name")
       .populate("postedBy", "_id name")
       .exec();
 
@@ -202,12 +203,14 @@ const handlePrice = async (req, res, price) => {
     console.log(error);
   }
 };
+
+// Filter by category
 
 const handleCategory = async (req, res, category) => {
   try {
     let products = await Product.find({ category })
       .populate("category", "_id name")
-      .populate("subs", "_id name")
+      .populate("subCategories", "_id name")
       .populate("postedBy", "_id name")
       .exec();
 
@@ -216,6 +219,8 @@ const handleCategory = async (req, res, category) => {
     console.log(error);
   }
 };
+
+// Filter by rating/star
 
 const handleStar = (req, res, stars) => {
   Product.aggregate([
@@ -236,7 +241,7 @@ const handleStar = (req, res, stars) => {
       if (err) console.log("AGGREGATE ERROR", err);
       Product.find({ _id: aggregates })
         .populate("category", "_id name")
-        .populate("subs", "_id name")
+        .populate("subCategories", "_id name")
         .populate("postedBy", "_id name")
         .exec((err, products) => {
           if (err) console.log("PRODUCT AGGREGATE ERROR", err);
@@ -245,8 +250,20 @@ const handleStar = (req, res, stars) => {
     });
 };
 
-exports.searchFilters = async (req, res) => {
-  const { query, price, category, stars } = req.body;
+// Filter by sub-category
+
+const handleSubCategory = async (req, res, subCategory) => {
+  const products = await Product.find({ subCategories: subCategory })
+    .populate("category", "_id name")
+    .populate("subCategories", "_id name")
+    .populate("postedBy", "_id name")
+    .exec();
+
+  res.json(products);
+};
+
+export const searchFilters = async (req, res) => {
+  const { query, price, category, stars, subCategory } = req.body;
 
   // filter by text
 
@@ -274,5 +291,12 @@ exports.searchFilters = async (req, res) => {
   if (stars) {
     console.log("stars ---> ", stars);
     await handleStar(req, res, stars);
+  }
+
+  // filter by sub-category
+
+  if (subCategory) {
+    console.log("sub-category ---> ", subCategory);
+    await handleSubCategory(req, res, subCategory);
   }
 };

@@ -7,10 +7,13 @@ import { averageRating } from "../../functions/rating";
 import defaultImage from "../../images/defaultImage.jpg";
 import "./productCard.css";
 import _ from "lodash";
+import { useDispatch } from "react-redux";
 
 const ProductCard = ({ product }) => {
   const [tooltip, setTooltip] = useState("Click to add");
   const [tooltipColor, setTooltipColor] = useState("#2db7f5");
+
+  const dispatch = useDispatch();
 
   // destructure
   const { images, title, description, price, slug } = product;
@@ -45,6 +48,14 @@ const ProductCard = ({ product }) => {
       // add tooltip
       setTooltip("Product added");
       setTooltipColor("#f50");
+
+      // add to redux
+
+      dispatch({
+        type: "ADD_TO_CART",
+        // payload: cart,
+        payload: unique,
+      });
     }
   };
 

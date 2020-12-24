@@ -29,6 +29,7 @@ import CategoryHomePage from "./pages/category/CategoryHomePage";
 import SubCategoryHomePage from "./pages/subCategory/SubCategoryHomePage";
 import ShopPage from "./pages/ShopPage";
 import CartPage from "./pages/CartPage";
+import SideDrawer from "./components/SideDrawer";
 
 function App() {
   const dispatch = useDispatch();
@@ -64,8 +65,8 @@ function App() {
   return (
     <>
       <Header />
-
       <ToastContainer />
+      <SideDrawer />
 
       <Switch>
         <Route exact path="/" component={HomePage} />

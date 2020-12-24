@@ -58,6 +58,12 @@ const SingleProduct = ({ product, onStarClick, star }) => {
         // payload: cart,
         payload: unique,
       });
+
+      // SHOW DRAWER
+      dispatch({
+        type: "SET_VISIBILITY",
+        payload: true,
+      });
     }
   };
 

@@ -56,6 +56,12 @@ const ProductCard = ({ product }) => {
         // payload: cart,
         payload: unique,
       });
+
+      // SHOW DRAWER
+      dispatch({
+        type: "SET_VISIBILITY",
+        payload: true,
+      });
     }
   };
 

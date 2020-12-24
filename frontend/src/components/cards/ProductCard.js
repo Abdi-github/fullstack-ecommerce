@@ -1,13 +1,17 @@
+import React, { useState } from "react";
 import { EyeOutlined, ShoppingCartOutlined } from "@ant-design/icons";
-import { Card } from "antd";
+import { Card, Tooltip } from "antd";
 import Meta from "antd/lib/card/Meta";
-import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { averageRating } from "../../functions/rating";
 import defaultImage from "../../images/defaultImage.jpg";
 import "./productCard.css";
+import _ from "lodash";
 
 const ProductCard = ({ product }) => {
+  const [tooltip, setTooltip] = useState("Click to add");
+  const [tooltipColor, setTooltipColor] = useState("#2db7f5");
+
   // destructure
   const { images, title, description, price, slug } = product;
   const history = useHistory();
@@ -15,6 +19,33 @@ const ProductCard = ({ product }) => {
     e.preventDefault();
     // console.log(history);
     history.push(`/product/${slug}`);
+  };
+
+  const handleAddToCart = () => {
+    // create cart array
+    let cart = [];
+    if (typeof window !== "undefined") {
+      // if cart is in local storage GET it
+      if (localStorage.getItem("cart")) {
+        cart = JSON.parse(localStorage.getItem("cart"));
+      }
+
+      // push new product to cart
+      cart.push({
+        ...product,
+        count: 1,
+      });
+
+      // remove duplicates
+      let unique = _.uniqWith(cart, _.isEqual);
+
+      // save to local storage
+      localStorage.setItem("cart", JSON.stringify(unique));
+
+      // add tooltip
+      setTooltip("Product added");
+      setTooltipColor("#f50");
+    }
   };
 
   return (
@@ -32,9 +63,12 @@ const ProductCard = ({ product }) => {
           <Link to={`/product/${slug}`}>
             <EyeOutlined className="text-warning" /> <br /> View Product
           </Link>,
-          <>
-            <ShoppingCartOutlined className="text-danger" /> <br /> Add to Cart
-          </>,
+          <Tooltip title={tooltip} color={tooltipColor}>
+            <Link onClick={handleAddToCart}>
+              <ShoppingCartOutlined className="text-danger" /> <br /> Add to
+              Cart
+            </Link>
+          </Tooltip>,
         ]}
       >
         <Meta

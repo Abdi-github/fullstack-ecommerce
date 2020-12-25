@@ -1,6 +1,6 @@
 import Coupon from "../models/coupon";
 
-exports.create = async (req, res) => {
+export const create = async (req, res) => {
   try {
     const { name, expiry, discount } = req.body.coupon;
     res.json(await new Coupon({ name, expiry, discount }).save());
@@ -9,17 +9,17 @@ exports.create = async (req, res) => {
   }
 };
 
-exports.remove = async (req, res) => {
+export const getAll = async (req, res) => {
   try {
-    res.json(await Coupon.findByIdAndDelete(req.params.couponId).exec());
+    res.json(await Coupon.find({}).sort({ createdAt: -1 }).exec());
   } catch (error) {
     console.log(error);
   }
 };
 
-exports.list = async (req, res) => {
+export const remove = async (req, res) => {
   try {
-    res.json(await Coupon.find({}).sort({ createdAt: -1 }).exec());
+    res.json(await Coupon.findByIdAndDelete(req.params.couponId).exec());
   } catch (error) {
     console.log(error);
   }

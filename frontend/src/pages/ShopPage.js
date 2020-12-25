@@ -76,6 +76,9 @@ const ShopPage = () => {
   useEffect(() => {
     const delayed = setTimeout(() => {
       getProducts({ query: text });
+      if (!text) {
+        loadAllProducts();
+      }
     }, 300);
     return () => clearTimeout(delayed);
     // getProducts({ query: text });

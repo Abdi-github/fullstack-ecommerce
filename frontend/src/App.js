@@ -30,6 +30,7 @@ import SubCategoryHomePage from "./pages/subCategory/SubCategoryHomePage";
 import ShopPage from "./pages/ShopPage";
 import CartPage from "./pages/CartPage";
 import SideDrawer from "./components/SideDrawer";
+import CheckoutPage from "./pages/CheckoutPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -113,6 +114,7 @@ function App() {
         <Route path="/subcategory/:slug" component={SubCategoryHomePage} />
         <Route path="/shop" component={ShopPage} />
         <Route path="/cart" component={CartPage} />
+        <Route path="/checkout" component={CheckoutPage} />
       </Switch>
     </>
   );

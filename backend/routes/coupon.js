@@ -10,7 +10,7 @@ const { authVerify, adminVerify } = require("../middlewares/authMiddleware");
 const router = express.Router();
 
 router.post("/coupon", authVerify, adminVerify, create);
-router.get("/coupon", getAll);
+router.get("/coupons", getAll);
 router.delete("/coupon/:couponId", authVerify, adminVerify, remove);
 
 module.exports = router;

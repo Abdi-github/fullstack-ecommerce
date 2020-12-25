@@ -17,7 +17,7 @@ export const getCoupons = async () => {
 };
 
 export const removeCoupon = async (couponId, usertoken) =>
-  await axios.delete(`${process.env.REACT_APP_API}/product/${couponId}`, {
+  await axios.delete(`${process.env.REACT_APP_API}/coupon/${couponId}`, {
     headers: {
       usertoken,
     },

@@ -32,6 +32,7 @@ import CartPage from "./pages/CartPage";
 import SideDrawer from "./components/SideDrawer";
 import CheckoutPage from "./pages/CheckoutPage";
 import CouponCreatePage from "./pages/admin/coupon/CouponCreatePage";
+import PaymentPage from "./pages/PaymentPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -117,6 +118,7 @@ function App() {
         <Route path="/cart" component={CartPage} />
         <Route path="/checkout" component={CheckoutPage} />
         <AdminRoute path="/admin/coupon" component={CouponCreatePage} />
+        <UserPrivateRoute path="/payment" component={PaymentPage} />
       </Switch>
     </>
   );

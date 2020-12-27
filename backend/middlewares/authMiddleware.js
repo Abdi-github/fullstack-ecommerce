@@ -4,7 +4,7 @@ import User from "../models/user";
 // VERIFY USER BASED ON TOKEN
 
 export const authVerify = async (req, res, next) => {
-  //   console.log(req.headers);
+  // console.log("headers---------->", req.headers.usertoken);
   try {
     const firebaseUser = await admin
       .auth()

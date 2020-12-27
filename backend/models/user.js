@@ -16,14 +16,7 @@ const userSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
-    address: {
-      fullName: { type: String, required: true },
-      street: { type: String, required: true },
-      streetNo: { type: String, required: true },
-      city: { type: String, required: true },
-      zip: { type: String, required: true },
-      country: { type: String, required: true },
-    },
+    address: String,
     //   wishlist: [{ type: ObjectId, ref: "Product" }],
   },
   { timestamps: true }

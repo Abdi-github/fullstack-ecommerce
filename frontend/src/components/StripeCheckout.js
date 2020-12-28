@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { createPaymentIntent } from "../functions/stripe";
 
 import { Card } from "antd";
 import { DollarOutlined, CheckOutlined } from "@ant-design/icons";
+import { createOrder, emptyUserCart } from "../functions/user";
 
 const StripeCheckout = ({ history }) => {
   const user = useSelector((state) => state.user);
@@ -23,6 +24,8 @@ const StripeCheckout = ({ history }) => {
 
   const stripe = useStripe();
   const elements = useElements();
+
+  const dispatch = useDispatch();
 
   const coupon = useSelector((state) => state.coupon);
 
@@ -62,8 +65,28 @@ const StripeCheckout = ({ history }) => {
       setError(`Payment failed ${payload.error.message}`);
       setProcessing(false);
     } else {
-      // here you get result after successful payment
+      // here we get result after successful payment
       // create order and save in database for admin to process
+
+      createOrder(payload, user.token).then((res) => {
+        if (res.data.ok) {
+          // empty cart from local storage
+          if (typeof window !== "undefined") localStorage.removeItem("cart");
+          // empty cart from redux
+          dispatch({
+            type: "ADD_TO_CART",
+            payload: [],
+          });
+          // reset coupon to false
+          dispatch({
+            type: "COUPON_APPLIED",
+            payload: false,
+          });
+          // empty cart from database
+          emptyUserCart(token);
+        }
+      });
+
       // empty user cart from redux store and local storage
       console.log(JSON.stringify(payload, null, 4));
       setError(null);

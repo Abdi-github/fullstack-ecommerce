@@ -54,3 +54,14 @@ export const applyCoupon = async (coupon, usertoken) =>
       },
     }
   );
+
+export const createOrder = async (stripeResponse, usertoken) =>
+  await axios.post(
+    `${process.env.REACT_APP_API}/user/order`,
+    { stripeResponse },
+    {
+      headers: {
+        usertoken,
+      },
+    }
+  );

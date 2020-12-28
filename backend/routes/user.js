@@ -7,6 +7,9 @@ import {
   applyCouponToUserCart,
   createOrder,
   getOrders,
+  addToWishlist,
+  getWishlist,
+  removeFromWishlist,
 } from "../controllers/user";
 import { authVerify } from "../middlewares/authMiddleware";
 
@@ -27,5 +30,10 @@ router.post("/user/order", authVerify, createOrder);
 
 // Order History of a user
 router.get("/user/orders", authVerify, getOrders);
+
+// wishlist
+router.post("/user/wishlist", authVerify, addToWishlist);
+router.get("/user/wishlist", authVerify, getWishlist);
+router.put("/user/wishlist/:productId", authVerify, removeFromWishlist);
 
 module.exports = router;

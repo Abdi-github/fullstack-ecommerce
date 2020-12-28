@@ -2,7 +2,7 @@ import { HeartOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Card, Tabs, Tooltip } from "antd";
 import Meta from "antd/lib/card/Meta";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
@@ -13,8 +13,10 @@ import ProductDetails from "./ProductDetails";
 import StarRating from "react-star-ratings";
 import RatingModal from "../modals/RatingModal";
 import { averageRating } from "../../functions/rating";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import _ from "lodash";
+import { addToWishlist } from "../../functions/user";
+import { toast } from "react-toastify";
 
 const SingleProduct = ({ product, onStarClick, star }) => {
   const { title, description, images, _id } = product;
@@ -24,7 +26,10 @@ const SingleProduct = ({ product, onStarClick, star }) => {
   const [tooltip, setTooltip] = useState("Click to add");
   const [tooltipColor, setTooltipColor] = useState("#2db7f5");
 
+  const user = useSelector((state) => state.user);
+  const { token } = user;
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleAddToCart = () => {
     // create cart array
@@ -65,6 +70,15 @@ const SingleProduct = ({ product, onStarClick, star }) => {
         payload: true,
       });
     }
+  };
+
+  const handleAddToWishlist = (e) => {
+    e.preventDefault();
+    addToWishlist(product._id, token).then((res) => {
+      console.log("ADDED TO WISHLIST", res.data);
+      toast.success("Added to wishlist");
+      history.push("/user/wishlist");
+    });
   };
 
   return (
@@ -118,7 +132,7 @@ const SingleProduct = ({ product, onStarClick, star }) => {
                 Cart
               </Link>
             </Tooltip>,
-            <Link to="/">
+            <Link onClick={handleAddToWishlist}>
               <HeartOutlined className="text-info" /> <br /> Add to Wishlist
             </Link>,
             <RatingModal>

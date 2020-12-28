@@ -149,3 +149,15 @@ export const createOrder = async (req, res) => {
   console.log("NEW ORDER SAVED-------->", newOrder);
   res.json({ ok: true });
 };
+
+// Get all orders by a user
+
+export const getOrders = async (req, res) => {
+  let user = await User.findOne({ email: req.user.email }).exec();
+
+  let userOrders = await Order.find({ orderedBy: user._id })
+    .populate("products.product")
+    .exec();
+
+  res.json(userOrders);
+};

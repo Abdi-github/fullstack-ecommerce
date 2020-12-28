@@ -6,6 +6,7 @@ import {
   saveAddress,
   applyCouponToUserCart,
   createOrder,
+  getOrders,
 } from "../controllers/user";
 import { authVerify } from "../middlewares/authMiddleware";
 
@@ -23,5 +24,8 @@ router.post("/user/cart/coupon", authVerify, applyCouponToUserCart);
 
 // Order
 router.post("/user/order", authVerify, createOrder);
+
+// Order History of a user
+router.get("/user/orders", authVerify, getOrders);
 
 module.exports = router;

@@ -12,6 +12,8 @@ import { useDispatch } from "react-redux";
 const ProductCard = ({ product }) => {
   const [tooltip, setTooltip] = useState("Click to add");
   const [tooltipColor, setTooltipColor] = useState("#2db7f5");
+  const [tooltipNoStock, setTooltipNoStock] = useState("Out of Stock");
+  const [tooltipNoStockColor, setTooltipNoStockColor] = useState("#f50");
 
   const dispatch = useDispatch();
 
@@ -81,10 +83,16 @@ const ProductCard = ({ product }) => {
             <EyeOutlined className="text-warning" /> <br /> View Product
           </Link>,
           <Tooltip title={tooltip} color={tooltipColor}>
-            <Link onClick={handleAddToCart}>
-              <ShoppingCartOutlined className="text-danger" /> <br /> Add to
-              Cart
-            </Link>
+            {product.quantity === 0 ? (
+              <Tooltip title={tooltipNoStock} color={tooltipNoStockColor}>
+                <div className="text-danger">Out of stock</div>
+              </Tooltip>
+            ) : (
+              <Link onClick={handleAddToCart}>
+                <ShoppingCartOutlined className="text-danger" /> <br /> Add to
+                Cart
+              </Link>
+            )}
           </Tooltip>,
         ]}
       >

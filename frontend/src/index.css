@@ -1,5 +1,3 @@
-.slider img,
-.card-image {
-  height: 400px;
-  object-fit: cover;
+* {
+  background-color: white;
 }

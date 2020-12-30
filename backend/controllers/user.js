@@ -3,6 +3,7 @@ import Cart from "../models/cart";
 import Product from "../models/product";
 import Coupon from "../models/coupon";
 import Order from "../models/order";
+import UserAddress from "../models/userAddress";
 
 export const userCart = async (req, res) => {
   // console.log(req.body);
@@ -128,6 +129,7 @@ export const createOrder = async (req, res) => {
     products,
     paymentIntent,
     orderedBy: user._id,
+    shippingAddress,
   }).save();
 
   // decrement quantity, increment sold after order

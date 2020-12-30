@@ -32,11 +32,11 @@ const BestSellers = () => {
     <>
       <div className="container">
         {loading ? (
-          <LoadingCardSkeleton count={3} />
+          <LoadingCardSkeleton count={4} />
         ) : (
           <div className="row">
             {products.map((product) => (
-              <div key={product._id} className="col-md-4">
+              <div key={product._id} className="col-12 col-sm-6 col-md-3 mb-4">
                 <ProductCard product={product} />
               </div>
             ))}

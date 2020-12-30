@@ -128,12 +128,15 @@ const SingleProduct = ({ product, onStarClick, star }) => {
           actions={[
             <Tooltip title={tooltip} color={tooltipColor}>
               <Link onClick={handleAddToCart}>
-                <ShoppingCartOutlined className="text-danger" /> <br /> Add to
-                Cart
+                <ShoppingCartOutlined
+                  style={{ fontSize: "20px", color: "#e84f25" }}
+                />
+                <br /> Add to Cart
               </Link>
             </Tooltip>,
             <Link onClick={handleAddToWishlist}>
-              <HeartOutlined className="text-info" /> <br /> Add to Wishlist
+              <HeartOutlined style={{ fontSize: "20px", color: "#e84f25" }} />
+              <br /> Add to Wishlist
             </Link>,
             <RatingModal>
               <StarRating
